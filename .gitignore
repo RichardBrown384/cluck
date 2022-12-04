@@ -1,0 +1,14 @@
+# CLion project files
+.idea
+*.iml
+
+# MacOS files
+.DS_Store
+
+# CLion build directories
+cmake-build-debug
+cmake-build-release
+
+# Games
+games
+*.glksave
