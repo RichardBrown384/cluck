@@ -7,6 +7,10 @@ This project requires the following:
 * A C and C++ compiler with C++20 support (Clang 14 or later).
 * [CMake][cmake] 3.21 or later
 
+## Why Cluck?
+
+One has no idea how one would pronounce Glulx.
+
 ## About
 
 Cluck is Virtual Machine for Interactive Fiction implementing of the [Glulx][glulx] 3.1.3 standard.
@@ -17,10 +21,6 @@ by our compiler. Where possible, workarounds are used and documented.
 It currently uses a fork of [Cheap Glk][cheap-glk] as its [Glk][glk] implementation.
 
 It currently doesn't support [Blorbs][blorb] as that requires some further thought on the design.
-
-## Why Cluck? 
-
-One has no idea how one would pronounce Glulx.
 
 ### Design decisions
 
