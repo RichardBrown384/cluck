@@ -8,6 +8,7 @@ namespace fiction::glulx {
 
 auto GlulxReadBuffer::GetSize() const -> uint32_t { return buffer.size(); }
 auto GlulxReadBuffer::GetPosition() const -> uint32_t { return position; }
+auto GlulxReadBuffer::SetPosition(uint32_t p) -> void { position = p; }
 auto GlulxReadBuffer::Skip(uint32_t n) -> void { position += n; }
 
 auto GlulxReadBuffer::Read8() -> uint32_t {

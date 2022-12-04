@@ -11,7 +11,7 @@ class GlulxInputOutputSystem;
 
 class Glulx {
 public:
-    explicit Glulx(std::vector<uint8_t>);
+    explicit Glulx(const std::vector<uint8_t>&);
     Glulx(const Glulx&) = delete;
     Glulx(Glulx&&) = delete;
     Glulx& operator=(const Glulx&) = delete;

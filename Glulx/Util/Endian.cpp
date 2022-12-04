@@ -2,14 +2,6 @@
 
 namespace fiction::endian {
 
-auto PackBigEndian16(uint32_t a, uint32_t b) -> uint32_t {
-    return (a << 8) + b;
-}
-
-auto PackBigEndian32(uint32_t a, uint32_t b, uint32_t c, uint32_t d) -> uint32_t {
-    return (a << 24) + (b << 16) + (c << 8) + d;
-}
-
 auto Read8(const std::vector<uint8_t>& array, const uint32_t address) -> uint32_t {
     return array[address];
 }

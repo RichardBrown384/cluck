@@ -16,6 +16,8 @@ public:
 
     [[nodiscard]] auto GetSize() const -> uint32_t;
     [[nodiscard]] auto GetPosition() const -> uint32_t;
+
+    auto SetPosition(uint32_t) -> void;
     auto Skip(uint32_t) -> void;
 
     auto Read8() -> uint32_t;

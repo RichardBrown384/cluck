@@ -21,9 +21,16 @@ using GlulxServerFunction = std::function<uint32_t(uint32_t, const std::vector<u
 
 class GlulxInputOutputSystem;
 
+struct GlulxExtractor {
+    explicit GlulxExtractor(const std::vector<uint8_t>&);
+    std::vector<uint8_t> file;
+};
+
 class GlulxImpl {
+private:
+    explicit GlulxImpl(const GlulxExtractor&);
 public:
-    explicit GlulxImpl(std::vector<uint8_t>);
+    explicit GlulxImpl(const std::vector<uint8_t>&);
     GlulxImpl(const GlulxImpl&) = delete;
     GlulxImpl(GlulxImpl&&) = delete;
     GlulxImpl& operator=(const GlulxImpl&) = delete;
