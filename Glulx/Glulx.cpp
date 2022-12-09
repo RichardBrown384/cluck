@@ -3,7 +3,7 @@
 
 using namespace fiction::glulx;
 
-Glulx::Glulx(std::vector<uint8_t> file) : impl(std::make_unique<GlulxImpl>(std::move(file))) { }
+Glulx::Glulx(const std::vector<uint8_t>& file) : impl(std::make_unique<GlulxImpl>(file)) { }
 
 Glulx::~Glulx() = default;
 

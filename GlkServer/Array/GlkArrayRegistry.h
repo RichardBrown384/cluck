@@ -37,6 +37,7 @@ public:
     void operator=(const GlkArrayRegistry&) = delete;
     void operator=(const GlkArrayRegistry&&) = delete;
     auto CreateArray8(uint32_t, const std::function<void(char*)>&) -> char*;
+    auto CreateArray8(const std::vector<uint8_t>&, const std::function<void(char*)>&) -> char*;
     auto CreateArray32(uint32_t, const std::function<void(uint32_t*)>&) -> uint32_t*;
     auto Register(void*, uint32_t, char*) -> uint32_t;
     auto Unregister(void*, uint32_t, char*, uint32_t) -> void;

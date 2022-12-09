@@ -82,17 +82,7 @@ auto ReadIff(
 
     GlulxReadBuffer buffer(data);
 
-    const auto form = buffer.Read32();
-    const auto length = buffer.Read32();
-    const auto ifzs = buffer.Read32();
-
-    if (form != FORM) {
-        return false;
-    }
-    if (length != buffer.GetSize() - 8u) {
-        return false;
-    }
-    if (ifzs != IFZS) {
+    if (!IsFormHeaderValid(buffer, IFZS)) {
         return false;
     }
 

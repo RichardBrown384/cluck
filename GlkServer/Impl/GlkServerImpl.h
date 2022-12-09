@@ -13,13 +13,15 @@ namespace fiction::glk {
 class GlkObjectRegistry;
 class GlkArrayRegistry;
 class GlkClient;
+using GlkUniqueStream = std::unique_ptr<glk_stream_struct, void(*)(glk_stream_struct*)>;
 
 class GlkServerImpl {
 public:
     GlkServerImpl(
         GlkObjectRegistry&,
         GlkArrayRegistry&,
-        GlkClient&);
+        GlkClient&,
+        const std::vector<uint8_t>&);
 
     auto Tick() -> void;
     auto PutChar8(uint32_t) -> void;
@@ -33,6 +35,7 @@ private:
     GlkObjectRegistry& objects;
     GlkArrayRegistry& arrays;
     GlkClient& client;
+    GlkUniqueStream blorb;
 
 private:
     template<class T>

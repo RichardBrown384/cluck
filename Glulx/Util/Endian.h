@@ -4,8 +4,13 @@
 #include <vector>
 
 namespace fiction::endian {
-auto PackBigEndian16(uint32_t, uint32_t) -> uint32_t ;
-auto PackBigEndian32(uint32_t, uint32_t, uint32_t, uint32_t) -> uint32_t;
+constexpr auto PackBigEndian16(uint32_t a, uint32_t b) -> uint32_t {
+    return (a << 8) + b;
+}
+
+constexpr auto PackBigEndian32(uint32_t a, uint32_t b, uint32_t c, uint32_t d) -> uint32_t{
+    return (a << 24) + (b << 16) + (c << 8) + d;
+}
 
 auto Read8(const std::vector<uint8_t>&, uint32_t) -> uint32_t;
 auto Read16(const std::vector<uint8_t>&, uint32_t) -> uint32_t;

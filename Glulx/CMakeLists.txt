@@ -1,6 +1,7 @@
 add_library(
     glulx STATIC
     Glulx.cpp
+    Impl/Blorb/GlulxBlorbRead.cpp
     Impl/Components/Acceleration/GlulxAcceleration.cpp
     Impl/Components/Acceleration/GlulxAccelerationFunctions.cpp
     Impl/Components/Gestalt/GlulxGestalt.cpp
@@ -43,6 +44,7 @@ add_library(
     Impl/GlulxError.cpp
     Impl/GlulxImpl.cpp
     Impl/Header/GlulxHeader.cpp
+    Impl/Serial/GlulxIff.cpp
     Impl/Serial/GlulxReadBuffer.cpp
     Impl/Serial/GlulxCompression.cpp
     Impl/Serial/GlulxSerialRead.cpp

@@ -6,21 +6,37 @@
 #include "Impl/Execute/GlulxExecute.h"
 
 #include "Impl/Serial/GlulxSerial.h"
+#include "Impl/Blorb/GlulxBlorbRead.h"
 
 namespace fiction::glulx {
+namespace {
+auto ExtractFromBlorb(const std::vector<uint8_t>& file) {
+    const auto& executable = ExtractGlulExecutable(file);
+    if (!executable.empty()) {
+        return executable;
+    }
+    return file;
+}
+}
 
-GlulxImpl::GlulxImpl(std::vector<uint8_t> file) :
-    header(ReadHeader(file)),
+GlulxExtractor::GlulxExtractor(const std::vector<uint8_t>& file_in) :
+    file(ExtractFromBlorb(file_in))  {}
+
+GlulxImpl::GlulxImpl(const GlulxExtractor& extractor) :
+    header(ReadHeader(extractor.file)),
     running(IsHeaderValid(header)),
     programCounter(0u),
     stringTable(0u),
-    memory(std::move(file), header),
+    memory(extractor.file, header),
     stack(header),
     iosystems(),
     serverFunction([](uint32_t,const std::vector<uint32_t>&) { return 0u; }),
     random(),
     acceleration(),
     undo() {}
+
+GlulxImpl::GlulxImpl(const std::vector<uint8_t>& file) :
+    GlulxImpl(GlulxExtractor(file)) {}
 
 GlulxImpl::~GlulxImpl() = default;
 
