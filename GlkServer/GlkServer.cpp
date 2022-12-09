@@ -7,11 +7,12 @@
 
 namespace fiction::glk {
 
-GlkServer::GlkServer(GlkClient& client)
+GlkServer::GlkServer(GlkClient& client, const std::vector<uint8_t>& resources)
     : impl(std::make_unique<GlkServerImpl>(
         GlkObjectRegistry::GetInstance(),
         GlkArrayRegistry::GetInstance(),
-        client)) {}
+        client,
+        resources)) {}
 
 GlkServer::~GlkServer() = default;
 

@@ -6,6 +6,10 @@
 
 #include <iostream>
 
+extern "C" {
+#include "gi_blorb.h"
+}
+
 namespace fiction::glk {
 
 constexpr auto STRING_C = 0xE0u;
@@ -17,12 +21,30 @@ constexpr auto STRING_UNICODE = 0xE2000000u;
     std::exit(1);
 }
 
-GlkServerImpl::GlkServerImpl(
-    GlkObjectRegistry& objects,
-    GlkArrayRegistry& arrays,
-    GlkClient& client) :
-    objects(objects), arrays(arrays), client(client) {}
+namespace {
+auto GlkStreamOpenMemory(GlkArrayRegistry& arrays, const std::vector<uint8_t>& buffer) {
+    auto array = arrays.CreateArray8(buffer, [](auto){});
+    return glk_stream_open_memory(array, buffer.size(), filemode_Read, 0u);
+}
 
+auto GlkStreamClose(strid_t stream) {
+    glk_stream_close(stream, nullptr);
+}
+}
+
+GlkServerImpl::GlkServerImpl(
+    GlkObjectRegistry& objects_in,
+    GlkArrayRegistry& arrays_in,
+    GlkClient& client_in,
+    const std::vector<uint8_t>& resources_in) :
+    objects(objects_in),
+    arrays(arrays_in),
+    client(client_in),
+    blorb(GlkStreamOpenMemory(arrays, resources_in), GlkStreamClose) {
+    if (giblorb_set_resource_map(blorb.get())) {
+        blorb.reset(nullptr);
+    }
+}
 
 auto GlkServerImpl::GetObject(uint32_t id) -> void* {
     return objects.GetObject(id);

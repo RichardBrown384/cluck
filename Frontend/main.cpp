@@ -15,13 +15,15 @@ void GlkMain(const std::vector<std::string>& arguments) {
         return;
     }
 
-    Glulx glulx(fiction::filesystem::LoadFile(arguments[1u]));
+    const auto& game = fiction::filesystem::LoadFile(arguments[1u]);
+
+    Glulx glulx(game);
     if (!glulx.IsFileValid()) {
         return;
     }
 
     GlkGlulxClient client(glulx);
-    GlkServer server(client);
+    GlkServer server(client, game);
 
     GlkInputOutputSystem io(server);
     glulx.SetInputOutputSystem(IO_SYSTEM_GLK, io);

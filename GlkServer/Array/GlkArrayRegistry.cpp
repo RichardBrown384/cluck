@@ -1,6 +1,7 @@
 #include "GlkArrayRegistry.h"
 
 #include <utility>
+#include <vector>
 
 namespace fiction::glk {
 
@@ -10,6 +11,12 @@ auto GlkArrayRegistry::CreateArray8(uint32_t length, const std::function<void(ch
     arrays8.emplace(std::piecewise_construct,
                    std::forward_as_tuple(static_cast<void*>(unmanaged)),
                    std::forward_as_tuple(std::move(managed), function));
+    return unmanaged;
+}
+
+auto GlkArrayRegistry::CreateArray8(const std::vector<uint8_t>& array, const std::function<void(char*)>& function) -> char* {
+    auto unmanaged = CreateArray8(array.size(), function);
+    std::memcpy(unmanaged, array.data(), array.size());
     return unmanaged;
 }
 

@@ -11,7 +11,7 @@ class GlkClient;
 
 class GlkServer {
 public:
-    explicit GlkServer(GlkClient&);
+    GlkServer(GlkClient&, const std::vector<uint8_t>&);
     GlkServer(const GlkServer&) = delete;
     GlkServer(GlkServer&&) = delete;
     GlkServer& operator=(GlkServer&) = delete;
