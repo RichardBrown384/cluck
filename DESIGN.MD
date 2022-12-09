@@ -73,4 +73,4 @@ The `PutChar` methods allow the application to implement a Glk Output Stream.
 The `PutBuffer8` and `GetBuffer8` allow the application to implement saving and restoring of game state.
 
 ***
-[glulx]: https://eblong.com/zarf/glulx/
+[glulxe]: https://github.com/erkyrath/glulxe
