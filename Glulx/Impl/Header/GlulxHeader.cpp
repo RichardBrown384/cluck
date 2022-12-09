@@ -51,7 +51,7 @@ auto ReadHeader(const std::vector<uint8_t>& file) -> GlulxHeader {
     header.checksum = Read32(file, HEADER_CHECKSUM_OFFSET);
     header.filesize = file.size();
     header.filechecksum = ComputeChecksum(file, 0u, HEADER_CHECKSUM_OFFSET)
-        + ComputeChecksum(file, HEADER_CHECKSUM_OFFSET + 4u, header.extstart);
+        + ComputeChecksum(file, HEADER_CHECKSUM_OFFSET + 4u, header.filesize);
     return header;
 }
 
@@ -63,7 +63,7 @@ auto IsHeaderValid(const GlulxHeader& header) -> bool {
     auto major = MajorVersion(header.version);
     auto minor = MinorVersion(header.version);
     auto revision = RevisionVersion(header.version);
-    if (major > 3) {
+    if (major < 2 || major > 3) {
         return false;
     } else if (major == 3) {
         if (minor > 1 || revision > 3) {

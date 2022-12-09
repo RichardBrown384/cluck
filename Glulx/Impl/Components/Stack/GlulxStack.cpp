@@ -14,10 +14,14 @@ auto CheckAlignment(uint32_t address, uint32_t size) {
         std::exit(1);
     }
 }
+
+auto GetStackSizeSafe(const GlulxHeader& header) {
+    return IsHeaderValid(header) ? header.stacksize : 0u;
+}
 }
 
 GlulxStack::GlulxStack(const GlulxHeader& header) :
-    stack(header.stacksize),
+    stack(GetStackSizeSafe(header)),
     stackpointer(0u),
     framepointer(0u) {}
 
