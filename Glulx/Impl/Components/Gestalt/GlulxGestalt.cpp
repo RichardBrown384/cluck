@@ -1,5 +1,7 @@
 #include "Impl/GlulxImpl.h"
 
+#include "Util/Version.h"
+
 namespace {
 constexpr auto GESTALT_SELECTOR_VERSION_GLULX = 0u;
 constexpr auto GESTALT_SELECTOR_VERSION_INTERPRETER = 1u;
@@ -19,16 +21,12 @@ constexpr auto GESTALT_SELECTOR_DOUBLE = 13u;
 
 namespace fiction::glulx {
 
-constexpr auto MakeVersion(auto major, auto minor, auto revision) {
-    return (major << 16u) + ((minor & 0xFFu) << 8u) + (revision & 0xFFu);
-}
-
 auto Gestalt(GlulxImpl& glulx, uint32_t selector, uint32_t argument) -> uint32_t {
     switch (selector) {
         case GESTALT_SELECTOR_VERSION_GLULX:
-            return MakeVersion(3, 1, 3);
+            return MAX_VERSION;
         case GESTALT_SELECTOR_VERSION_INTERPRETER:
-            return MakeVersion(0, 0, 1);
+            return INTERPRETER_VERSION;
         case GESTALT_SELECTOR_IO_SYSTEM:
             return glulx.IsInputOutputSystemSupported(argument);
         case GESTALT_SELECTOR_MALLOC_HEAP:

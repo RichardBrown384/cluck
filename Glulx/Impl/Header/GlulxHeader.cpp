@@ -1,9 +1,11 @@
 #include "GlulxHeader.h"
 
 #include "Util/Endian.h"
+#include "Util/Version.h"
 
 using namespace fiction::endian;
 
+namespace fiction::glulx {
 namespace {
 
 constexpr auto GLULX_MAGIC = 0x476C756Cu;
@@ -19,10 +21,6 @@ constexpr auto HEADER_DECODINGTABLE_OFFSET = 28u;
 constexpr auto HEADER_CHECKSUM_OFFSET = 32u;
 constexpr auto HEADER_LENGTH = 36u;
 
-constexpr auto MajorVersion(auto version) { return version >> 16u; }
-constexpr auto MinorVersion(auto version) { return (version >> 8u) & 0xFFu; }
-constexpr auto RevisionVersion(auto version) { return version & 0xFFu; }
-
 auto ComputeChecksum(const std::vector<uint8_t>& file, auto start, auto end) -> uint32_t {
     auto checksum = 0u;
     for (auto address = start; address < end; address += 4) {
@@ -32,8 +30,6 @@ auto ComputeChecksum(const std::vector<uint8_t>& file, auto start, auto end) -> 
 }
 
 }
-
-namespace fiction::glulx {
 
 auto ReadHeader(const std::vector<uint8_t>& file) -> GlulxHeader {
     GlulxHeader header {};
@@ -60,15 +56,8 @@ auto IsHeaderValid(const GlulxHeader& header) -> bool {
         return false;
     }
 
-    auto major = MajorVersion(header.version);
-    auto minor = MinorVersion(header.version);
-    auto revision = RevisionVersion(header.version);
-    if (major < 2 || major > 3) {
+    if (header.version < MIN_VERSION || header.version > MAX_VERSION) {
         return false;
-    } else if (major == 3) {
-        if (minor > 1 || revision > 3) {
-            return false;
-        }
     }
 
     const auto extstartValid = (header.extstart == header.filesize);
