@@ -48,18 +48,41 @@ struct HeapBlock {
     uint32_t length;
     bool free;
 };
+
+auto GetMemorySafe(std::vector<uint8_t> memory, const GlulxHeader& header) -> std::vector<uint8_t> {
+    if (IsHeaderValid(header)) {
+        return memory;
+    }
+    return {};
+}
+
+auto GetRamStartSafe(const GlulxHeader& header) {
+    return IsHeaderValid(header) ? header.ramstart : 0u;
+}
+
+auto GetExtStartSafe(const GlulxHeader& header) {
+    return IsHeaderValid(header) ? header.extstart : 0u;
+}
+
+auto GetEndMemSafe(const GlulxHeader& header) {
+    return IsHeaderValid(header) ? header.endmem : 0u;
+}
+
 }
 
 struct GlulxMemory::Data {
     explicit Data(std::vector<uint8_t> memory_in, const GlulxHeader& header_in) :
-        memory(std::move(memory_in)),
+        memory(GetMemorySafe(std::move(memory_in), header_in)),
         protectAddress(0u),
         protectLength(0u),
         blocks(),
         heapStart(0),
         allocations(0),
+        ramstart(GetRamStartSafe(header_in)),
+        extstart(GetExtStartSafe(header_in)),
+        endmem(GetEndMemSafe(header_in)),
         header(header_in),
-        originalRam(memory.begin() + header.ramstart, memory.begin() + header.extstart) {}
+        originalRam(memory.begin() + ramstart, memory.begin() + extstart) {}
 
     std::vector<uint8_t> memory;
 
@@ -70,7 +93,12 @@ struct GlulxMemory::Data {
     uint32_t heapStart;
     uint32_t allocations;
 
+    const uint32_t ramstart;
+    const uint32_t extstart;
+    const uint32_t endmem;
+
     const GlulxHeader header;
+
     const std::vector<uint8_t> originalRam;
 };
 
@@ -80,10 +108,10 @@ GlulxMemory::GlulxMemory(std::vector<uint8_t> memory, const GlulxHeader& header)
 GlulxMemory::~GlulxMemory() = default;
 
 auto GlulxMemory::GetSize() const -> uint32_t { return data->memory.size(); }
-auto GlulxMemory::GetRamStart() const -> uint32_t { return data->header.ramstart; }
+auto GlulxMemory::GetRamStart() const -> uint32_t { return data->ramstart; }
 auto GlulxMemory::GetHeapStart() const -> uint32_t { return data->heapStart; }
-auto GlulxMemory::GetExtStart() const -> uint32_t { return data->header.extstart; }
-auto GlulxMemory::GetEndMem() const -> uint32_t { return data->header.endmem; }
+auto GlulxMemory::GetExtStart() const -> uint32_t { return data->extstart; }
+auto GlulxMemory::GetEndMem() const -> uint32_t { return data->endmem; }
 
 auto GlulxMemory::SetProtect(uint32_t address, uint32_t length) -> void {
     // Note: this is different from what the spec says
@@ -136,6 +164,7 @@ auto GlulxMemory::Read16(uint32_t address) const -> uint32_t {
     CheckReadableAddress(address, 2u);
     return ::Read16(data->memory, address);
 }
+
 auto GlulxMemory::Read32(uint32_t address) const -> uint32_t {
     CheckReadableAddress(address, 4u);
     return ::Read32(data->memory, address);
@@ -363,6 +392,9 @@ auto GlulxMemory::SetHeapSummary(uint32_t heapStart, const std::vector<std::pair
 }
 
 auto GlulxMemory::Restart() -> void {
+    if (!IsHeaderValid(data->header)) {
+        return;
+    }
     std::vector<uint8_t> zero(GetEndMem() - GetRamStart());
     SetRamSummary(GetEndMem(), zero);
 }
