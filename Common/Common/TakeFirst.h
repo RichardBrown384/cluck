@@ -6,7 +6,7 @@
 namespace {
 
 // Note: This is so we can use structured bindings to unpack the arguments
-// to the Glk calls. Unpacking them directly by array index was somewhat
+// in various calls. Unpacking them directly by array index was somewhat
 // error-prone. This could potentially be replaced by ranges.
 // Taken from https://stackoverflow.com/a/28411055
 

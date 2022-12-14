@@ -6,8 +6,8 @@
 
 #include "Impl/Header/GlulxHeader.h"
 
-#include "Util/Endian.h"
-#include "Util/MathsUtil.h"
+#include "Common/Endian.h"
+#include "Common/MathsUtil.h"
 
 using namespace fiction::endian;
 

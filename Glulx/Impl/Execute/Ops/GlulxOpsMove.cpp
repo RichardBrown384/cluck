@@ -1,6 +1,6 @@
 #include "Impl/GlulxImpl.h"
 #include "Impl/Execute/Instruction/GlulxInstruction.h"
-#include "Util/MathsUtil.h"
+#include "Common/MathsUtil.h"
 
 namespace fiction::glulx {
 

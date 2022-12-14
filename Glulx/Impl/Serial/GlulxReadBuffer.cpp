@@ -1,6 +1,6 @@
 #include "GlulxReadBuffer.h"
 
-#include "Util/Endian.h"
+#include "Common/Endian.h"
 
 using namespace fiction::endian;
 

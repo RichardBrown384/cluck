@@ -50,12 +50,13 @@ add_library(
     Impl/Serial/GlulxSerialRead.cpp
     Impl/Serial/GlulxSerialWrite.cpp
     Impl/Serial/GlulxWriteBuffer.cpp
-    Util/Endian.cpp
 )
 
 target_include_directories(glulx
     PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
     )
+
+target_link_libraries(glulx PRIVATE common)
 
 target_compile_options(glulx PRIVATE -Wall -Wextra -Werror -pedantic)

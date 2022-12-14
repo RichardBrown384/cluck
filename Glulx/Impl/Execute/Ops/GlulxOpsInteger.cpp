@@ -2,7 +2,7 @@
 
 #include "Impl/Execute/Instruction/GlulxInstruction.h"
 
-#include "Util/MathsUtil.h"
+#include "Common/MathsUtil.h"
 #include "Util/Integer.h"
 
 namespace fiction::glulx {

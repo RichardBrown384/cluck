@@ -12,6 +12,7 @@ FetchContent_Declare(CheapGlk
 
 FetchContent_MakeAvailable(CheapGlk)
 
+add_subdirectory(Common)
 add_subdirectory(Frontend)
 add_subdirectory(GlkServer)
 add_subdirectory(Glulx)
