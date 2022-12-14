@@ -1,5 +1,5 @@
 #include "Impl/GlkServerImpl.h"
-#include "Util/TakeFirst.h"
+#include "Common/TakeFirst.h"
 
 namespace fiction::glk {
 

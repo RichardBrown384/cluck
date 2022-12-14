@@ -30,4 +30,6 @@ target_include_directories(GlkServer
     ${CMAKE_CURRENT_SOURCE_DIR}
     )
 
+target_link_libraries(GlkServer PRIVATE common)
+
 target_compile_options(GlkServer PRIVATE -Wall -Wextra -Werror -pedantic)

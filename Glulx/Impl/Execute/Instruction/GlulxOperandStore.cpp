@@ -4,7 +4,7 @@
 #include "GlulxInstruction.h"
 #include "Impl/Execute/GlulxExecuteConstants.h"
 
-#include "Util/MathsUtil.h"
+#include "Common/MathsUtil.h"
 
 namespace fiction::glulx {
 namespace {

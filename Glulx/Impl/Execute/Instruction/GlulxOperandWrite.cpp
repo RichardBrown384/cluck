@@ -5,7 +5,7 @@
 
 #include "Impl/Execute/GlulxExecuteConstants.h"
 
-#include "Util/BitCast.h"
+#include "Common/BitCast.h"
 
 namespace fiction::glulx {
 

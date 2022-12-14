@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "Util/Endian.h"
+#include "Common/Endian.h"
 
 namespace fiction::glulx {
 

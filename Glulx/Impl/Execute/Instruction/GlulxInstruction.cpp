@@ -1,7 +1,7 @@
 #include "Impl/GlulxImpl.h"
 #include "GlulxInstruction.h"
 
-#include "Util/Endian.h"
+#include "Common/Endian.h"
 
 namespace fiction::glulx {
 

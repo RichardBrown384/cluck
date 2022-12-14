@@ -1,6 +1,6 @@
 #include "GlulxHeader.h"
 
-#include "Util/Endian.h"
+#include "Common/Endian.h"
 #include "Util/Version.h"
 
 using namespace fiction::endian;
